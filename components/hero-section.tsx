@@ -1,6 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import { AuthModal } from "@/components/auth-modal"
+import { ConfettiCelebration } from "@/components/confetti-celebration"
 
 // Icon components for each category
 const icons = [
@@ -73,6 +75,8 @@ const icons = [
 export function HeroSection() {
   const [mounted, setMounted] = useState(false)
   const [radius, setRadius] = useState(120)
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
   const iconCount = icons.length
 
   useEffect(() => {
@@ -94,6 +98,14 @@ export function HeroSection() {
     return () => window.removeEventListener("resize", updateRadius)
   }, [])
 
+  const handleLoginSuccess = useCallback(() => {
+    setShowConfetti(true)
+  }, [])
+
+  const handleConfettiComplete = useCallback(() => {
+    setShowConfetti(false)
+  }, [])
+
   const containerSize = radius * 2 + 60
 
   return (
@@ -107,7 +119,7 @@ export function HeroSection() {
       >
         {/* Rotating container for icons */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 pointer-events-none"
           style={{
             animation: mounted ? "rotateClockwise 30s linear infinite" : "none",
           }}
@@ -121,7 +133,7 @@ export function HeroSection() {
             return (
               <div
                 key={index}
-                className="absolute group cursor-pointer"
+                className="absolute pointer-events-none select-none"
                 style={{
                   left: "50%",
                   top: "50%",
@@ -132,7 +144,7 @@ export function HeroSection() {
                 }}
               >
                 <div 
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 group-hover:text-white group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-lg"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white/60 shadow-lg"
                   style={{
                     animation: mounted ? "counterRotate 30s linear infinite" : "none",
                   }}
@@ -144,15 +156,35 @@ export function HeroSection() {
           })}
         </div>
 
-        {/* Logo in center */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 animate-fade-in-hero">
+        {/* Logo in center - clickable for auth */}
+        <button
+          onClick={() => setIsAuthModalOpen(true)}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 animate-fade-in-hero cursor-pointer transition-transform duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-full"
+          aria-label="Click to login or register"
+        >
           <img
             src="/images/design-mode/photo_2025-10-04_15-28-47.jpg"
             alt="Quicklink Namibia Logo"
             className="h-24 sm:h-28 md:h-32 w-auto object-contain"
           />
-        </div>
+          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-xs sm:text-sm whitespace-nowrap">
+            Click to Sign In
+          </span>
+        </button>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
+
+      {/* Confetti Celebration */}
+      <ConfettiCelebration
+        isActive={showConfetti}
+        onComplete={handleConfettiComplete}
+      />
 
       <style jsx>{`
         @keyframes rotateClockwise {
