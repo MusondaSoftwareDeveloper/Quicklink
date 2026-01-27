@@ -72,7 +72,7 @@ const icons = [
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false)
-  const radius = 140 // Distance from center (closer to logo)
+  const radius = 210 // Distance from center (50% further from logo)
   const iconCount = icons.length
 
   useEffect(() => {
