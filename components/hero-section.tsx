@@ -72,20 +72,37 @@ const icons = [
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false)
-  const radius = 210 // Distance from center (50% further from logo)
+  const [radius, setRadius] = useState(120)
   const iconCount = icons.length
 
   useEffect(() => {
     setMounted(true)
+    
+    // Calculate responsive radius based on screen size
+    const updateRadius = () => {
+      const screenWidth = window.innerWidth
+      const screenHeight = window.innerHeight
+      const minDimension = Math.min(screenWidth, screenHeight)
+      
+      // Scale radius based on screen size (35% of the smaller dimension, with min/max limits)
+      const newRadius = Math.max(100, Math.min(200, minDimension * 0.35))
+      setRadius(newRadius)
+    }
+    
+    updateRadius()
+    window.addEventListener("resize", updateRadius)
+    return () => window.removeEventListener("resize", updateRadius)
   }, [])
 
+  const containerSize = radius * 2 + 60
+
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-visible">
+    <section className="min-h-screen flex items-center justify-center px-2 py-10 relative overflow-hidden">
       <div 
         className="relative flex items-center justify-center"
         style={{
-          width: radius * 2 + 80,
-          height: radius * 2 + 80,
+          width: containerSize,
+          height: containerSize,
         }}
       >
         {/* Rotating container for icons */}
@@ -108,14 +125,14 @@ export function HeroSection() {
                 style={{
                   left: "50%",
                   top: "50%",
-                  marginLeft: x - 20,
-                  marginTop: y - 20,
+                  marginLeft: x - 16,
+                  marginTop: y - 16,
                   opacity: mounted ? 1 : 0,
                   transition: "opacity 0.5s ease-out",
                 }}
               >
                 <div 
-                  className="w-10 h-10 sm:w-12 sm:h-12 p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 group-hover:text-white group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-lg"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 group-hover:text-white group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-lg"
                   style={{
                     animation: mounted ? "counterRotate 30s linear infinite" : "none",
                   }}
@@ -132,7 +149,7 @@ export function HeroSection() {
           <img
             src="/images/design-mode/photo_2025-10-04_15-28-47.jpg"
             alt="Quicklink Namibia Logo"
-            className="h-32 w-auto object-contain"
+            className="h-24 sm:h-28 md:h-32 w-auto object-contain"
           />
         </div>
       </div>
