@@ -100,7 +100,7 @@ export function HeroSection() {
             return (
               <div
                 key={index}
-                className="absolute flex flex-col items-center gap-1 group cursor-pointer"
+                className="absolute group cursor-pointer"
                 style={{
                   left: "50%",
                   top: "50%",
@@ -110,12 +110,9 @@ export function HeroSection() {
                   transition: "opacity 0.5s ease-out",
                 }}
               >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 p-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 group-hover:text-white group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 group-hover:text-white group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-lg">
                   {item.icon}
                 </div>
-                <span className="text-[8px] sm:text-[10px] text-white/60 group-hover:text-white/90 transition-colors font-medium whitespace-nowrap">
-                  {item.name}
-                </span>
               </div>
             )
           })}
