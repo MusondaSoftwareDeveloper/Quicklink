@@ -168,7 +168,7 @@ export function HeroSection() {
             className="h-24 sm:h-28 md:h-32 w-auto object-contain"
           />
           <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-xs sm:text-sm whitespace-nowrap">
-            <br>
+            Click to Sign In
           </span>
         </button>
       </div>
