@@ -20,10 +20,27 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: "Cliste - AI Automation for Enterprise",
+  title: "Quicklink Namibia - Your Local Services Hub",
   description:
-    "Transform your business with intelligent AI automation solutions. Empower your organization to operate at the speed of thought.",
-  generator: "v0.app",
+    "Discover local services in Namibia - Accommodation, Transport, Food, Activities, Health, Shopping and more. Your one-stop platform for connecting with trusted local businesses.",
+  keywords: ["Namibia", "local services", "accommodation", "transport", "food", "activities", "health", "shopping"],
+  authors: [{ name: "Quicklink Namibia" }],
+  openGraph: {
+    title: "Quicklink Namibia - Your Local Services Hub",
+    description: "Discover local services in Namibia - Accommodation, Transport, Food, Activities, Health, Shopping and more.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Quicklink Namibia - Your Local Services Hub",
+    description: "Discover local services in Namibia - Accommodation, Transport, Food, Activities, Health, Shopping and more.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
